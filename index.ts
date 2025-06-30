@@ -10,7 +10,11 @@ const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: {
     origin: '*',
+    methods: ["GET", "POST"]
   },
+  path: "/socket.io/",
+  transports: ['websocket'],
+  allowEIO3: true // If using older clients
 });
 
 app.get('/', (req, res) => {
