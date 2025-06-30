@@ -12,7 +12,7 @@ const io = new Server(httpServer, {
     origin: '*',
     methods: ["GET", "POST"]
   },
-  // path: "/socket.io/",
+  path: "/socket.io/",
   // transports: ['websocket'],
   allowEIO3: true // If using older clients
 });
