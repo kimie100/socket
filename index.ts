@@ -41,6 +41,10 @@ io.on('connection', (socket) => {
 
     io.to(room).emit('receive-message2', message);
   });
+  socket.on('send-message3', ({ room, message }) => {
+
+    io.to(room).emit('receive-message3', message);
+  });
 });
 
 httpServer.listen(3002, () => {
