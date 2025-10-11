@@ -6,6 +6,7 @@ import cors from 'cors';
 
 const app = express();
 app.use(cors());
+app.use(express.json());
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
   cors: {
@@ -46,7 +47,24 @@ io.on('connection', (socket) => {
     io.to(room).emit('receive-message3', message);
   });
 });
+app.post('/api/notify', (req, res) => {
+  const { amount,
+    bankName,
+    name, type } = req.body;
 
+
+  // Emit to a specific room
+  io.to('view').emit('receive-task', {
+    type,
+    amount,
+    bankName,
+    name,
+  });
+  console.log(`[Webhook] Emitted "receive-task" to room "view"`);
+
+
+  res.json({ success: true, event: "receive-task", room: "view", });
+});
 httpServer.listen(3002, () => {
   console.log('listening on *:3002');
 });
