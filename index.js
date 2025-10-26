@@ -128,7 +128,7 @@ async function handleNotification(data) {
   console.log('📊 Data:', { type, amount, bankName, name, status });
 
   const notificationTitle = type || 'Notification';
-  const notificationBody = `${status || ''} ${type || ''} ${amount || ''}`.trim();
+  const notificationBody = `${status || ''} RM${amount || ''}`.trim();
 
   // ✅ Check if user is currently connected via Socket.IO
   const userRoom = io.sockets.adapter.rooms.get(username);
