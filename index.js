@@ -167,7 +167,7 @@ async function handleNotification(data) {
             bankName: String(bankName || ''),
             name: String(name || ''),
             status: String(status || ''),
-            route: '/order-details'
+            route: '/splash'
           }
         );
         console.log(`✅ FCM notification sent successfully`);
