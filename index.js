@@ -66,6 +66,12 @@ io.on('connection', (socket) => {
 
     io.to(room).emit('receive-message3', message);
   });
+  socket.on('lock-task', ({ room, message }) => {
+    console.log("🚀 ~ message:", message)
+    console.log("🚀 ~ room:", room)
+
+    io.to(room).emit('user-lock-task', message);
+  });
   //end admin web
   //start android
   socket.on('send_notification', async (data) => {
@@ -118,6 +124,29 @@ app.post('/api/notify', (req, res) => {
 
   res.json({ success: true, event: "receive-task", room: "view", });
 });
+
+
+app.post('/api/hold', async (req, res) => {
+  const { amount, bankName, name, type, username, status } = req.body;
+
+  await handleNotification({
+    username,
+    type,
+    amount,
+    bankName,
+    name,
+    status
+  })
+  // Emit to a specific room
+  io.to(username).emit('onhold-task', {
+    username,
+  });
+  console.log(`[Webhook] Emitted "onhold-task" to room "view"`);
+
+
+  res.json({ success: true, event: "receive-task", room: "view", });
+});
+
 // ============================================
 // Notification Handler Function (Shared)
 // ============================================
